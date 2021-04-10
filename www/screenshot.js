@@ -36,3 +36,5 @@ cordova.addConstructor(function () {
   });
   return window.plugins.preventscreenshot;
 });
+
+module.exports = screenshot;
