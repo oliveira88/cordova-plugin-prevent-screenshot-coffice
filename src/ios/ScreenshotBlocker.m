@@ -106,6 +106,28 @@ UIImageView* cover;
 }
 -(void)tookScreeshot {
     NSLog(@"SCREENSHOT CAPTURADA");
+    PHFetchOptions *fetchOptions = [[PHFetchOptions alloc] init];
+    fetchOptions.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:YES]];
+    PHFetchResult *fetchResult = [PHAsset fetchAssetsWithMediaType:PHAssetMediaTypeImage options:fetchOptions];
+    PHAsset *lastAsset = [fetchResult lastObject];
+    NSLog(@"%@",lastAsset);
+
+    // PHFetchResult *asset = [PHAsset fetchAssetsWithALAssetURLs:@"lastAsset" options:nil];
+    // [asset enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+    //     NSLog(@"%@",[obj class]);
+    //     [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
+    //         BOOL req = [obj canPerformEditOperation:PHAssetEditOperationDelete];
+    //         if (req) {
+    //             NSLog(@"true");
+    //             [PHAssetChangeRequest deleteAssets:@[obj]];
+    //         }
+    //     } completionHandler:^(BOOL success, NSError *error) {
+    //         NSLog(@"Finished Delete asset. %@", (success ? @"Success." : error));
+    //         if (success) {
+    //             NSLog(@"delete successfully");  
+    //         }
+    //     }];
+    //     }];
     if(_eventCommand!=nil) {
         CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"tookScreenshot"];
         [pluginResult setKeepCallbackAsBool:YES];
